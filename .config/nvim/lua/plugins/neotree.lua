@@ -34,7 +34,7 @@ return {
     vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
 
     require('neo-tree').setup {
-      close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = 'rounded',
       enable_git_status = true,
       enable_diagnostics = true,
@@ -304,6 +304,19 @@ return {
             ['os'] = { 'order_by_size', nowait = false },
             ['ot'] = { 'order_by_type', nowait = false },
           },
+        },
+        symbols = {
+          -- Change type
+          added = '', -- or "✚", but this is redundant info if you use git_status_colors on the name
+          modified = '', -- or "", but this is redundant info if you use git_status_colors on the name
+          deleted = '✖', -- this can only be used in the git_status source
+          renamed = '󰁕', -- this can only be used in the git_status source
+          -- Status type
+          untracked = '',
+          ignored = '',
+          unstaged = '󰄱',
+          staged = '',
+          conflict = '',
         },
       },
     }
