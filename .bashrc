@@ -62,13 +62,14 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR=hx
-export VISUAL=hx
+export EDITOR=/usr/bin/nvim
+export VISUAL=/usr/bin/nvim
 alias pico='edit'
 alias spico='sedit'
 alias nano='edit'
 alias snano='sedit'
 alias vim='nvim'
+alias nv='nvim'
 
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
@@ -144,7 +145,7 @@ alias vi='nvim'
 alias svi='sudo vi'
 alias vis='nvim "+set si"'
 alias zz='zellij'
-alias edit='hx'
+alias edit='nvim'
 
 # Change directory aliases
 alias home='cd ~'

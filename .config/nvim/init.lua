@@ -31,4 +31,5 @@ require('lazy').setup {
   require 'plugins.zenmode',
   require 'plugins.fugitive',
   require 'plugins.colortheme',
+  require 'plugins.harpoon',
 }
