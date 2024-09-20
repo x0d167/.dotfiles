@@ -16,7 +16,7 @@ return {
           require('neotest-plenary').setup {
             -- this is my standard location for minimal vim rc
             -- in all my projects
-            min_init = './scripts/tests/minimal.vim',
+            -- min_init = './scripts/tests/minimal.vim',
           },
         },
       }

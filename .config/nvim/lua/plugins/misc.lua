@@ -1,6 +1,10 @@
 -- Standalone plugins with less than 10 lines of config go here
 return {
   {
+    -- required for neotest
+    'nvim-neotest/nvim-nio',
+  },
+  {
     -- Tmux & split window navigation
     'christoomey/vim-tmux-navigator',
   },

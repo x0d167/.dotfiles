@@ -30,11 +30,12 @@ require('lazy').setup {
   require 'plugins.indent-blankline',
   require 'plugins.misc',
   require 'plugins.trouble',
-  --  require 'plugins.neotest',
+  require 'plugins.comment',
   require 'plugins.zenmode',
   require 'plugins.fugitive',
   require 'plugins.colortheme',
   require 'plugins.harpoon',
+  require 'plugins.neotest',
 }
 -- test the below and delete if you hate it
 -- LSP Diagnostics Options Setup
