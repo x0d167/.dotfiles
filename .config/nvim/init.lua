@@ -15,6 +15,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Set up plugins
 require('lazy').setup {
+  require 'plugins.colortheme',
+  require 'plugins.dashboard',
   require 'plugins.rustaceanvim',
   require 'plugins.neotree',
   require 'plugins.lsp',
@@ -33,9 +35,9 @@ require('lazy').setup {
   require 'plugins.comment',
   require 'plugins.zenmode',
   require 'plugins.fugitive',
-  require 'plugins.colortheme',
   require 'plugins.harpoon',
   require 'plugins.neotest',
+  require 'plugins.noice',
 }
 -- test the below and delete if you hate it
 -- LSP Diagnostics Options Setup
@@ -60,7 +62,7 @@ vim.diagnostic.config {
   severity_sort = false,
   float = {
     border = 'rounded',
-    source = 'always',
+    source = 'if_many',
     header = '',
     prefix = '',
   },
