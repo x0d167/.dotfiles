@@ -15,8 +15,9 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Set up plugins
 require('lazy').setup {
+  require 'plugins.cmp',
   require 'plugins.colortheme',
-  require 'plugins.dashboard',
+  require 'plugins.codesnap',
   require 'plugins.rustaceanvim',
   require 'plugins.neotree',
   require 'plugins.lsp',
