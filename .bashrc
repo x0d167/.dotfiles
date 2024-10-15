@@ -609,3 +609,5 @@ source /home/agrippa/github/alacritty/extra/completions/alacritty.bash
 
 export LIBVIRT_DEFAULT_URI='qemu:///system'
 export PATH="$PATH:/opt/nvim/"
+eval "$(uv generate-shell-completion bash)"
+eval "$(uvx --generate-shell-completion bash)"
