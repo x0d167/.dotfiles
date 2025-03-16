@@ -5,6 +5,7 @@ cursorline = true
 bufferline = "multiple"
 popup-border = "all"
 color-modes = true
+line-number = "relative"
 
 [editor.cursor-shape]
 normal = "block"
@@ -13,7 +14,7 @@ select = "underline"
 
 [editor.whitespace.render]
 tab = "all"
-space = "all"
+space = "none"
 nbsp = "none"
 nnbsp = "none"
 newline = "none"

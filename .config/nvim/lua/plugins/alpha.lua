@@ -49,7 +49,7 @@ return {
     end
 
     dashboard.section.footer.val = {
-      centerText('x0d: District 12', 50),
+      centerText('x0d1.67: District 12', 50),
       ' ',
       centerText(date, 50),
       centerText(time, 50),

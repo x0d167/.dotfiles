@@ -62,8 +62,8 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR=/opt/nvim//nvim
-export VISUAL=/opt/nvim//nvim
+# export EDITOR=/opt/nvim//nvim
+# export VISUAL=/opt/nvim//nvim
 alias pico='edit'
 alias spico='sedit'
 alias nano='edit'
@@ -132,7 +132,7 @@ alias da='date "+%Y-%m-%d %A %T %Z"'
 # Alias's to modified commands
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='trash -v'
+# alias rm='trash -v'
 alias mkdir='mkdir -p'
 alias ps='ps auxf'
 alias ping='ping -c 10'
@@ -145,7 +145,7 @@ alias vi='nvim'
 alias svi='sudo vi'
 alias vis='nvim "+set si"'
 alias zz='zellij'
-alias edit='nvim'
+alias edit='hx'
 
 # Change directory aliases
 alias home='cd ~'
@@ -600,7 +600,7 @@ if [[ $- == *i* ]]; then
     bind '"\C-f":"zi\n"'
 fi
 
-export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bin:/.local/share/flatpak/exports/bin"
+export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bin:/.local/share/flatpak/exports/bin:$HOME/.cargo/bin/hx"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 eval "$(starship init bash)"
@@ -611,3 +611,5 @@ export LIBVIRT_DEFAULT_URI='qemu:///system'
 export PATH="$PATH:/opt/nvim/"
 eval "$(uv generate-shell-completion bash)"
 eval "$(uvx --generate-shell-completion bash)"
+. "$HOME/.cargo/env"
+export HELIX_RUNTIME=~/src/helix/runtime
