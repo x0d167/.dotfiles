@@ -62,12 +62,12 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-# export EDITOR=/opt/nvim//nvim
-# export VISUAL=/opt/nvim//nvim
+export EDITOR='$VISUAL'
+export VISUAL=''/usr/local/bin/nvim
 alias pico='edit'
 alias spico='sedit'
-alias nano='edit'
-alias snano='sedit'
+alias edit='nano'
+alias sedit='sudo nano'
 alias vim='nvim'
 alias nv='nvim'
 
@@ -121,7 +121,7 @@ alias web='cd /var/www/html'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Edit this .bashrc file
-alias ebrc='edit ~/.bashrc'
+alias ebrc='nvim ~/.bashrc'
 
 # Show help for this .bashrc file
 alias hlp='less ~/.bashrc_help'
@@ -141,11 +141,10 @@ alias cls='clear'
 alias apt='sudo apt'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
-alias vi='nvim'
+# alias vi='nvim'
 alias svi='sudo vi'
 alias vis='nvim "+set si"'
 alias zz='zellij'
-alias edit='hx'
 
 # Change directory aliases
 alias home='cd ~'
@@ -180,7 +179,21 @@ alias lla='ls -Al'                # List and Hidden Files
 alias las='ls -A'                 # Hidden Files
 alias lls='ls -l'                 # List
 alias et='eza -T'                 # Tree
-alias rf='ranger'                 # Ranger tui
+alias yf='yazi'                   # Yazi tui
+alias rf='ranger'                 # Ranger tui in case I switch from Yazi in another config
+
+# Basic git commands
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push'
+alias gpom='git push origin main'
+alias ghelp='git help'
+alias gclone='git clone'
+alias ginit='git init'
+alias gdiff='git diff'
+alias gcheckout='git checkout'
+alias gfetch='git fetch'
 
 # alias chmod commands
 alias mx='chmod a+x'
