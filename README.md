@@ -19,8 +19,9 @@ sudo apt install stow
 ```
 
 ## Installation
+Don't forget to backup any relevant configs to refer back to before they're overwritten by this
 
-First, check out the dotfiles repo in you $HOME directory using git
+First, check out the dotfiles repo in your $HOME directory using git
 
 ```
 $ git clone git@github.com/x0d12/.dotfiles.git
