@@ -80,7 +80,7 @@ return {
 
         -- Fuzzy find all the symbols in your current workspace.
         --  Similar to document symbols, except searches over your entire project.
-        map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+        map('<leader>dw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace Symbols')
 
         -- Rename the variable under your cursor.
         --  Most Language Servers support renaming across files, etc.
@@ -154,7 +154,7 @@ return {
     local servers = {
       clangd = {},
       --  gopls = {},
-      pyright = {},
+      -- pyright = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
       -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -163,28 +163,28 @@ return {
       -- But for many setups, the LSP (`tsserver`) will work just fine
       -- tsserver = {},
       ruff = {},
-      pylsp = {
-        settings = {
-          pylsp = {
-            plugins = {
-              pyflakes = { enabled = false },
-              pycodestyle = { enabled = false },
-              autopep8 = { enabled = false },
-              yapf = { enabled = false },
-              mccabe = { enabled = false },
-              pylsp_mypy = { enabled = false },
-              pylsp_black = { enabled = false },
-              pylsp_isort = { enabled = false },
-            },
-          },
-        },
-      },
+      --       pylsp = {
+      --         settings = {
+      --           pylsp = {
+      --             plugins = {
+      --               pyflakes = { enabled = false },
+      --               pycodestyle = { enabled = false },
+      --               autopep8 = { enabled = false },
+      --               yapf = { enabled = false },
+      --               mccabe = { enabled = false },
+      --               pylsp_mypy = { enabled = false },
+      --               pylsp_black = { enabled = false },
+      --               pylsp_isort = { enabled = false },
+      --             },
+      --           },
+      --         },
+      --       },
       -- html = { filetypes = { 'html', 'twig', 'hbs' } },
       -- cssls = {},
       -- tailwindcss = {},
       -- dockerls = {},
       sqlls = {},
-      terraformls = {},
+      -- terraformls = {},
       jsonls = {},
       yamlls = {},
 

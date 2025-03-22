@@ -132,7 +132,7 @@ alias da='date "+%Y-%m-%d %A %T %Z"'
 # Alias's to modified commands
 alias cp='cp -i'
 alias mv='mv -i'
-# alias rm='trash -v'
+alias rm='trash -v'
 alias mkdir='mkdir -p'
 alias ps='ps auxf'
 alias ping='ping -c 10'
@@ -626,3 +626,4 @@ eval "$(uv generate-shell-completion bash)"
 eval "$(uvx --generate-shell-completion bash)"
 . "$HOME/.cargo/env"
 export HELIX_RUNTIME=~/src/helix/runtime
+export PATH="$HOME/.emacs.d/bin:$PATH"
