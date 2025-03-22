@@ -8,15 +8,8 @@ Ensure you have the following installed on your system
 
 ### Git
 
-```
-sudo apt install stow
-```
-
 ### Stow
 
-```
-sudo apt install stow 
-```
 
 ## Installation
 Don't forget to backup any relevant configs to refer back to before they're overwritten by this
@@ -34,4 +27,3 @@ then use GNU stow to create symlinks
 $ stow .
 ```
 
-Here's a good simple video on the process for setting this all up: https://www.youtube.com/watch?v=y6XCebnB9gs
