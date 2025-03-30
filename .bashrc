@@ -154,6 +154,9 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+# call python3 with py
+alias py='python3'
+
 # cd into the old directory
 alias bd='cd "$OLDPWD"'
 

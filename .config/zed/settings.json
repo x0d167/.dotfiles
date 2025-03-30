@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
+  "vim_mode": true,
   "features": {
     "edit_prediction_provider": "zed"
   },
@@ -18,7 +19,26 @@
   "theme": {
     "mode": "system",
     "light": "One Dark",
-    "dark": "One Dark"
+    "dark": "XY-Zed"
   },
-  "autosave": "on_focus_change"
+  "autosave": "on_focus_change",
+  "languages": {
+    "Python": {
+      "language_servers": ["ruff"],
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "code_actions": {
+            "source.organizeImports.ruff": true,
+            "source.fixAll.ruff": true
+          }
+        },
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        }
+      ]
+    }
+  }
 }

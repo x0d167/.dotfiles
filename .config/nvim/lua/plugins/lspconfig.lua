@@ -11,8 +11,8 @@ return {
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim', opts = {} },
 
-    -- Allows extra capabilities provided by nvim-cmp
-    'hrsh7th/cmp-nvim-lsp',
+    -- Allows extra capabilities provided by blink-cmp
+    'saghen/blink.cmp',
   },
   config = function()
     -- Brief aside: **What is LSP?**
@@ -139,8 +139,9 @@ return {
     --  By default, Neovim doesn't support everything that is in the LSP specification.
     --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
     --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+    local original_capabilities = vim.lsp.protocol.make_client_capabilities()
+    local capabilities = require('blink.cmp').get_lsp_capabilities(original_capabilities)
+    -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -153,6 +154,8 @@ return {
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
       clangd = {},
+      bashls = {},
+      marksman = {},
       --  gopls = {},
       -- pyright = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -162,23 +165,50 @@ return {
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
       -- tsserver = {},
-      ruff = {},
-      --       pylsp = {
-      --         settings = {
-      --           pylsp = {
-      --             plugins = {
-      --               pyflakes = { enabled = false },
-      --               pycodestyle = { enabled = false },
-      --               autopep8 = { enabled = false },
-      --               yapf = { enabled = false },
-      --               mccabe = { enabled = false },
-      --               pylsp_mypy = { enabled = false },
-      --               pylsp_black = { enabled = false },
-      --               pylsp_isort = { enabled = false },
-      --             },
-      --           },
-      --         },
-      --       },
+      ruff = {
+        -- Notes on code actions: https://github.com/astral-sh/ruff-lsp/issues/119#issuecomment-1595628355
+        -- Get isort like behavior: https://github.com/astral-sh/ruff/issues/8926#issuecomment-1834048218
+        commands = {
+          RuffAutofix = {
+            function()
+              vim.lsp.buf.execute_command {
+                command = 'ruff.applyAutofix',
+                arguments = {
+                  { uri = vim.uri_from_bufnr(0) },
+                },
+              }
+            end,
+            description = 'Ruff: Fix all auto-fixable problems',
+          },
+          RuffOrganizeImports = {
+            function()
+              vim.lsp.buf.execute_command {
+                command = 'ruff.applyOrganizeImports',
+                arguments = {
+                  { uri = vim.uri_from_bufnr(0) },
+                },
+              }
+            end,
+            description = 'Ruff: Format imports',
+          },
+        },
+      },
+      pylsp = {
+        settings = {
+          pylsp = {
+            plugins = {
+              pyflakes = { enabled = false },
+              pycodestyle = { enabled = false },
+              autopep8 = { enabled = false },
+              yapf = { enabled = false },
+              mccabe = { enabled = false },
+              pylsp_mypy = { enabled = false },
+              pylsp_black = { enabled = false },
+              pylsp_isort = { enabled = false },
+            },
+          },
+        },
+      },
       -- html = { filetypes = { 'html', 'twig', 'hbs' } },
       -- cssls = {},
       -- tailwindcss = {},
