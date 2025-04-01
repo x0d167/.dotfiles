@@ -3,7 +3,7 @@
 #
 # Default is `false`
 #
-# hide-cursor-when-typing = false
+hide-cursor-when-typing = true
 
 # Ignore theme selection foreground color
 #
@@ -128,7 +128,7 @@ args = []
 # Example:
 [window]
 opacity = 0.99
-decorations = "Enabled"
+decorations = "transparent"
 blur = true
 mode = "Windowed"
 
@@ -269,7 +269,7 @@ hide-if-single = true
 use-current-path = false
 color-automation = [
     # Set tab to green (#00FF00) when NeoVim is open.
-    { program = "nvim", color = "#00FF00"},
+    { program = "nvim", color = "#00FF00" },
 ]
 
 # Shell
@@ -379,4 +379,3 @@ keys = [
 # [developer]
 # log-level = "OFF"
 # enable-log-file = false
-
