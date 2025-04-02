@@ -185,6 +185,7 @@ mode = "Windowed"
 # You can also set family on root to overwrite all fonts.
 [fonts]
 family = "MesloLGL Nerd Font Mono"
+size = 18
 #
 # You can also specify extra fonts to load
 # [fonts]
@@ -268,8 +269,8 @@ clickable = true
 hide-if-single = true
 use-current-path = false
 color-automation = [
-    # Set tab to green (#00FF00) when NeoVim is open.
-    { program = "nvim", color = "#00FF00" },
+  # Set tab to green (#00FF00) when NeoVim is open.
+  { program = "nvim", color = "#00FF00" },
 ]
 
 # Shell
@@ -331,18 +332,18 @@ color-automation = [
 # Example:
 [bindings]
 keys = [
-    { key = "l", with = "Alt | Shift", action = "SelectNextSplit" },
-    { key = "h", with = "Alt | Shift", action = "SelectPrevSplit" },
-    { key = "1", with = "Control | Alt", action = "SelectTab(0)" },
-    { key = "2", with = "Control | Alt", action = "SelectTab(1)" },
-    { key = "3", with = "Control | Alt", action = "SelectTab(2)" },
-    { key = "4", with = "Control | Alt", action = "SelectTab(3)" },
-    { key = "5", with = "Control | Alt", action = "SelectTab(4)" },
-    { key = "6", with = "Control | Alt", action = "SelectTab(5)" },
-    { key = "7", with = "Control | Alt", action = "SelectTab(6)" },
-    { key = "8", with = "Control | Alt", action = "SelectTab(7)" },
-    { key = "9", with = "Control | Alt", action = "SelectTab(8)" },
-    { key = "10", with = "Control | Alt", action = "SelectTab(9)" },
+  { key = "l", with = "Alt | Shift", action = "SelectNextSplit" },
+  { key = "h", with = "Alt | Shift", action = "SelectPrevSplit" },
+  { key = "1", with = "Control | Alt", action = "SelectTab(0)" },
+  { key = "2", with = "Control | Alt", action = "SelectTab(1)" },
+  { key = "3", with = "Control | Alt", action = "SelectTab(2)" },
+  { key = "4", with = "Control | Alt", action = "SelectTab(3)" },
+  { key = "5", with = "Control | Alt", action = "SelectTab(4)" },
+  { key = "6", with = "Control | Alt", action = "SelectTab(5)" },
+  { key = "7", with = "Control | Alt", action = "SelectTab(6)" },
+  { key = "8", with = "Control | Alt", action = "SelectTab(7)" },
+  { key = "9", with = "Control | Alt", action = "SelectTab(8)" },
+  { key = "10", with = "Control | Alt", action = "SelectTab(9)" },
 ]
 # keys = [
 #   { key = "q", with = "super", action = "Quit" },
