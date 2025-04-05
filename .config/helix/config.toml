@@ -25,7 +25,7 @@ nbsp = "⍽"
 nnbsp = "␣"
 tab = "→"
 newline = "⏎"
-tabpad = "·" # Tabs will look like "→···" (depending on tab width)
+tabpad = "·"  # Tabs will look like "→···" (depending on tab width)
 
 [editor.indent-guides]
 render = true
@@ -37,3 +37,22 @@ skip-levels = 1
 enable = true
 max-wrap = 15
 max-indent-retain = 0
+
+[keys.normal]
+# Maps Ctrl-s to the :write (save file)
+C-s = ":w"
+C-g = [
+  ":write-all",
+  ":new",
+  ":insert-output lazygit",
+  ":buffer-close!",
+  ":redraw",
+  ":reload-all",
+]
+
+[keys.insert]
+# Maps Alt-X to enter normal mode
+"A-x" = "normal_mode"
+
+# Maps `jk` to exit insert mode
+j = { k = "normal_mode" }

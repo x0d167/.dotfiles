@@ -49,7 +49,7 @@ return {
         },
       },
       documentation = {
-        auto_show = true,
+        auto_show = false,
         auto_show_delay_ms = 200,
       },
       ghost_text = {
@@ -74,7 +74,7 @@ return {
     },
 
     keymap = {
-      preset = "default",
+      preset = "super-tab",
       ["<C-y>"] = { "select_and_accept" },
     },
   },

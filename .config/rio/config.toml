@@ -128,7 +128,7 @@ args = []
 # Example:
 [window]
 opacity = 0.99
-decorations = "transparent"
+decorations = "enabled"
 blur = true
 mode = "Windowed"
 

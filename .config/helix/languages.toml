@@ -1,17 +1,15 @@
 [[language]]
 name = "rust"
 auto-format = true
-formatter = { command = "rustfmt"}
-roots = [
-  "Cargo.toml",
-  "Cargo.lock"
-]
+formatter = { command = "rustfmt" }
+roots = ["Cargo.toml", "Cargo.lock"]
 [language.auto-pairs]
 '(' = ')'
 '{' = '}'
 '[' = ']'
 '"' = '"'
 '`' = '`'
+
 [language-server.rust-analyzer]
 command = "rust-analyzer"
 [language-server.rust-analyzer.config]
@@ -25,20 +23,73 @@ completion.autoimport.enable = true
 [language-server.rust-analyzer.config.check]
 command = "clippy"
 
+[language.debugger]
+command = "codelldb"
+name = "codelldb"
+port-arg = "--port {}"
+transport = "tcp"
+
+[[language.debugger.templates]]
+name = "binary"
+request = "launch"
+[[language.debugger.templates.completion]]
+completion = "filename"
+name = "binary"
+
+[language.debugger.templates.args]
+program = "{0}"
+runInTerminal = true
+
+
+[[language]]
+name = "awk"
+formatter = { command = "awk", timeout = 5, args = [
+  "--file=/dev/stdin",
+  "--pretty-print=/dev/stdout",
+] }
+
+
+[[language]]
+name = "bash"
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = 'shfmt', args = ["-i", "4"] }
+auto-format = true
+
 
 [[language]]
 name = "python"
-formatter = { command = "ruff"}
+formatter = { command = "ruff", args = ["format", "--line-length", "88", "-"] }
 auto-format = true
-language-servers = ["pyright", "ruff", "pylyzer"]
-[language-server.pyright.config.python.analysis]
-typeCheckingMode = "basic"
 [language-server.ruff]
 command = "ruff"
 args = ["server"]
-[language-server.pylyzer]
-command = "pylyzer"
-config = { settings = { args = ["--server"] } }
+
+[[language]]
+name = "json"
+formatter = { command = 'prettier', args = ["--parser", "json"] }
+
+
+[[language]]
+name = "markdown"
+formatter = { command = 'prettier', args = ["--parser", "markdown"] }
+
+
+[[language]]
+name = "yaml"
+formatter = { command = 'prettier', args = ["--parser", "yaml"] }
+auto-format = true
+
+
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["format", "-"] }
+auto-format = true
+
+
+[[language]]
+name = "lua"
+formatter = { command = "stylua", args = ["-"] }
+
 
 [[language]]
 name = "c"
@@ -47,12 +98,17 @@ auto-format = true
 language-servers = ["clangd", "typos"]
 [language-server.clangd]
 command = "clangd"
-args = ["--function-arg-placeholders", "--completion-style=detailed", "--clang-tidy", "--log=verbose"]
+args = [
+  "--function-arg-placeholders",
+  "--completion-style=detailed",
+  "--clang-tidy",
+  "--log=verbose",
+]
 [language-server.typos]
 command = "typos-lsp"
 # Logging level of the language server. Defaults to error.
 # Run with helix -v to output LSP logs to the editor log (:log-open)
-environment = {"RUST_LOG" = "error"}
+environment = { "RUST_LOG" = "error" }
 # Custom config. Used together with a config file found in the workspace or its parents,
 # taking precedence for settings declared in both. Equivalent to the typos `--config` cli argument.
 config.config = "~/code/typos-lsp/crates/typos-lsp/tests/typos.toml"
