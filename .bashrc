@@ -622,7 +622,8 @@ fi
 export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bin:/.local/share/flatpak/exports/bin:$HOME/.cargo/bin/hx"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
-eval "$(starship init bash)"
+# eval "$(starship init bash)"
+eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/EDM115-newline.omp.json)"
 eval "$(zoxide init bash)"
 source /home/agrippa/github/alacritty/extra/completions/alacritty.bash
 
