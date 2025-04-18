@@ -19,7 +19,7 @@
   "theme": {
     "mode": "system",
     "light": "One Dark",
-    "dark": "XY-Zed"
+    "dark": "Catppuccin Mocha"
   },
   "autosave": "on_focus_change",
   "languages": {

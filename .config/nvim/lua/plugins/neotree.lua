@@ -318,6 +318,12 @@ return {
         },
       },
     })
+    vim.cmd([[
+    hi NeoTreeNormal guibg=#1e1e2eAA guifg=#ffffff
+    hi NeoTreeNormalNC guibg=#1e1e2eAA guifg=#aaaaaa
+    hi NeoTreeEndOfBuffer guibg=#1e1e2eAA guifg=#1e1e2eAA
+    hi NeoTreeWinSeparator guibg=NONE guifg=#444444
+    ]])
 
     vim.keymap.set("n", "<leader>e", ":Neotree reveal toggle float<CR>", { noremap = true, silent = true }) -- focus file explorer
     vim.keymap.set("n", "<leader>ngs", ":Neotree float git_status<CR>", { noremap = true, silent = true }) -- open git status window

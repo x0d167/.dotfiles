@@ -1,6 +1,7 @@
 return {
   "akinsho/bufferline.nvim",
   event = "VeryLazy",
+  enabled = true,
   dependencies = {
     "moll/vim-bbye",
     "nvim-tree/nvim-web-devicons",
@@ -50,7 +51,7 @@ return {
         show_buffer_close_icons = true,
         show_close_icon = true,
         persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
-        separator_style = { "│", "│" }, -- | "thick" | "thin" | { 'any', 'any' },
+        separator_style = "Thick", -- { "│", "│" }, -- | "thick" | "thin" | { 'any', 'any' },
         enforce_regular_tabs = true,
         always_show_bufferline = true,
         icon_pinned = "󰐃",
@@ -64,19 +65,75 @@ return {
         end,
       },
       highlights = {
-        separator = {
-          fg = "#434C5E",
+        fill = {
+          bg = "none",
+        },
+        background = {
+          bg = "none",
         },
         buffer_selected = {
-          bold = true,
+          bg = "none",
           italic = false,
         },
-        -- separator_selected = {},
+        buffer_visible = {
+          bg = "none",
+        },
+        separator = {
+          bg = "none",
+          fg = "#434C5E",
+        },
+        separator_selected = {
+          bg = "none",
+          fg = "#434C5E",
+        },
+        separator_visible = {
+          bg = "none",
+          fg = "none",
+        },
+        tab = {
+          bg = "none",
+        },
+        tab_selected = {
+          bg = "none",
+        },
+        tab_close = {
+          bg = "none",
+        },
+        close_button = {
+          bg = "none",
+        },
+        close_button_selected = {
+          bg = "none",
+        },
+        -- separator = {
+        --   fg = "#434C5E",
+        -- },
+        -- buffer_selected = {
+        --   bg = "none",
+        --   bold = true,
+        --   italic = false,
+        -- },
+        -- separator_selected = {
+        --   fg = "#434C5E",
+        --   bg = "none",
+        -- },
         -- tab_selected = {},
-        -- background = {},
-        -- indicator_selected = {},
-        -- fill = {},
+        -- background = {
+        --   bg = "none",
+        -- },
+        -- indicator_selected = {
+        --   bg = "none",
+        -- },
+        -- fill = {
+        --   bg = "none",
+        -- },
       },
     })
+    -- Clear fallback highlights that might still be adding background
+    vim.cmd([[
+        highlight TabLineFill guibg=NONE ctermbg=NONE
+        highlight TabLineSel guibg=NONE ctermbg=NONE
+        highlight TabLine guibg=NONE ctermbg=NONE
+      ]])
   end,
 }

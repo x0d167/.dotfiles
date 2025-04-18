@@ -53,13 +53,37 @@ require("lazy").setup({
 })
 
 -- Transparency setup (place this towards the end)
+-- vim.cmd([[
+--   hi NonText ctermbg=none guibg=NONE
+--   hi Normal guibg=NONE ctermbg=NONE
+--   hi NormalNC guibg=NONE ctermbg=NONE
+--   hi SignColumn ctermbg=NONE ctermfg=NONE guibg=NONE
+--   hi Pmenu ctermbg=NONE ctermfg=NONE guibg=NONE
+--   hi FloatBorder ctermbg=NONE ctermfg=NONE guibg=NONE
+--   hi NormalFloat ctermbg=NONE ctermfg=NONE guibg=NONE
+--   hi TabLine ctermbg=None ctermfg=None guibg=None
+-- ]])
 vim.cmd([[
-  hi NonText ctermbg=none guibg=NONE
+  " Main editor background
   hi Normal guibg=NONE ctermbg=NONE
   hi NormalNC guibg=NONE ctermbg=NONE
-  hi SignColumn ctermbg=NONE ctermfg=NONE guibg=NONE
-  hi Pmenu ctermbg=NONE ctermfg=NONE guibg=NONE
-  hi FloatBorder ctermbg=NONE ctermfg=NONE guibg=NONE
-  hi NormalFloat ctermbg=NONE ctermfg=NONE guibg=NONE
-  hi TabLine ctermbg=None ctermfg=None guibg=None
+
+  " Invisible whitespace markers
+  hi NonText guibg=NONE ctermbg=NONE
+
+  " Sign column (e.g., Git signs, diagnostics)
+  hi SignColumn guibg=NONE ctermbg=NONE ctermfg=NONE
+
+  " Pop-up menu (autocomplete, etc.)
+  hi Pmenu guibg=#1e1e2eAA guifg=#ffffff
+  hi PmenuSel guibg=#44475a guifg=#ffffff
+  hi PmenuSbar guibg=#1e1e2eAA
+  hi PmenuThumb guibg=#888888
+
+  " Floating windows
+  hi NormalFloat guibg=#1e1e2eAA guifg=#ffffff
+  hi FloatBorder guibg=#1e1e2eAA guifg=#888888
+
+  " Tabline fallback (if used elsewhere)
+  hi TabLine guibg=#1e1e2eAA guifg=#cccccc
 ]])

@@ -41,7 +41,24 @@ return {
     require("lualine").setup({
       options = {
         icons_enabled = true,
-        -- theme = 'nord', -- Set theme based on environment variable
+        theme = { -- Set theme based on environment variable
+          normal = {
+            a = { fg = "#ffffff", bg = "#1e1e2eAA" },
+            b = { fg = "#ffffff", bg = "#1e1e2eAA" },
+            c = { fg = "#ffffff", bg = "#1e1e2eAA" },
+            x = { fg = "#ffffff", bg = "#1e1e2eAA" },
+            y = { fg = "#ffffff", bg = "#1e1e2eAA" },
+            z = { fg = "#ffffff", bg = "#1e1e2eAA" },
+          },
+          inactive = {
+            a = { fg = "#888888", bg = "#1e1e2eAA" },
+            b = { fg = "#888888", bg = "#1e1e2eAA" },
+            c = { fg = "#888888", bg = "#1e1e2eAA" },
+            x = { fg = "#888888", bg = "#1e1e2eAA" },
+            y = { fg = "#888888", bg = "#1e1e2eAA" },
+            z = { fg = "#888888", bg = "#1e1e2eAA" },
+          },
+        },
         -- Some useful glyphs:
         -- https://www.nerdfonts.com/cheat-sheet
         --        
@@ -69,5 +86,9 @@ return {
       tabline = {},
       extensions = { "fugitive" },
     })
+    vim.cmd([[
+      highlight StatusLine guibg=NONE ctermbg=NONE
+      highlight StatusLineNC guibg=NONE ctermbg=NONE
+    ]])
   end,
 }

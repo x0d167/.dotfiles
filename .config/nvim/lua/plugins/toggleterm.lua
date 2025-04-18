@@ -18,8 +18,14 @@ return {
         border = "curved",
         winblend = 0,
         highlights = {
+          Normal = {
+            guibg = "1e1e2eAA",
+          },
+          NormalFloat = {
+            link = "Normal",
+          },
           border = "Normal",
-          background = "Normal",
+          -- background = "Normal",
         },
       },
     })
