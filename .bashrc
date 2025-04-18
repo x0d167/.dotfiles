@@ -138,7 +138,6 @@ alias ps='ps auxf'
 alias ping='ping -c 10'
 alias less='less -R'
 alias cls='clear'
-alias apt='sudo apt'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
 # alias vi='nvim'
@@ -164,39 +163,42 @@ alias bd='cd "$OLDPWD"'
 alias rmd='/bin/rm  --recursive --force --verbose '
 
 # Alias's for multiple directory listing commands
-alias la='ls -Alh'                # show hidden files
-alias ls='ls -aFh --color=always' # add colors and file type extensions
-alias lx='ls -lXBh'               # sort by extension
-alias lk='ls -lSrh'               # sort by size
-alias lc='ls -ltcrh'              # sort by change time
-alias lu='ls -lturh'              # sort by access time
-alias lr='ls -lRh'                # recursive ls
-alias lt='ls -ltrh'               # sort by date
-alias lm='ls -alh |more'          # pipe through 'more'
-alias lw='ls -xAh'                # wide listing format
-alias ll='ls -Fls'                # long listing format
-alias labc='ls -lap'              # alphabetical sort
-alias lf="ls -l | egrep -v '^d'"  # files only
-alias ldir="ls -l | egrep '^d'"   # directories only
-alias lla='ls -Al'                # List and Hidden Files
-alias las='ls -A'                 # Hidden Files
-alias lls='ls -l'                 # List
-alias et='eza -T'                 # Tree
-alias yf='yazi'                   # Yazi tui
-alias rf='ranger'                 # Ranger tui in case I switch from Yazi in another config
+alias la='ls -Alh'                                # show hidden files
+alias ls='eza -aF --icons=always'                 # add colors, icons, and file type extensions
+alias lx='ls -lXBh'                               # sort by extension
+alias lk='ls -lSrh'                               # sort by size
+alias lc='ls -ltcrh'                              # sort by change time
+alias lu='ls -lturh'                              # sort by access time
+alias lr='ls -lRh'                                # recursive ls
+alias ll='eza -al --icons=always'                 #
+alias lm='ls -alh |more'                          # pipe through 'more'
+alias lw='ls -xAh'                                # wide listing format
+alias lt='eza -a --tree --level=1 --icons=always' # list all tree 1 level depth
+alias labc='ls -lap'                              # alphabetical sort
+alias lf="ls -l | egrep -v '^d'"                  # files only
+alias ldir="ls -l | egrep '^d'"                   # directories only
+alias lla='ls -Al'                                # List and Hidden Files
+alias las='ls -A'                                 # Hidden Files
+alias lls='ls -l'                                 # List
+alias et='eza -T'                                 # Tree
+alias yf='yazi'                                   # Yazi tui
+alias rf='ranger'                                 # Ranger tui in case I switch from Yazi in another config
 
 # Basic git commands
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push'
+alias gpl='git pull'
 alias gpom='git push origin main'
+alias gfo='git fetch origin'
 alias ghelp='git help'
 alias gclone='git clone'
 alias ginit='git init'
 alias gdiff='git diff'
 alias gcheckout='git checkout'
 alias gfetch='git fetch'
+alias gb='git branch'
 
 # alias chmod commands
 alias mx='chmod a+x'
@@ -629,7 +631,6 @@ source /home/agrippa/github/alacritty/extra/completions/alacritty.bash
 
 export LIBVIRT_DEFAULT_URI='qemu:///system'
 export PATH="$PATH:/opt/nvim/"
-. "$HOME/.cargo/env"
 export HELIX_RUNTIME=~/src/helix/runtime
 export PATH="$HOME/.emacs.d/bin:$PATH"
 eval "$(uv generate-shell-completion bash)"
