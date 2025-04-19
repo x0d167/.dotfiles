@@ -230,6 +230,8 @@ alias openports='netstat -nape --inet'
 # Alias's for safe and forced reboots
 alias rebootsafe='sudo shutdown -r now'
 alias rebootforce='sudo shutdown -r -n now'
+alias reboot='systemctl reboot'
+alias shutdown='systemctl poweroff'
 
 # Linutil lol
 alias linutil="curl -fsSL https://christitus.com/linux | sh"
