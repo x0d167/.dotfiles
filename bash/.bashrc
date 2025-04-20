@@ -62,7 +62,7 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR='$VISUAL'
+export EDITOR="$VISUAL"
 export VISUAL=''/usr/local/bin/nvim
 alias pico='edit'
 alias spico='sedit'
