@@ -62,14 +62,20 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR="$VISUAL"
-export VISUAL=''/usr/local/bin/nvim
-alias pico='edit'
-alias spico='sedit'
-alias edit='nano'
-alias sedit='sudo nano'
-alias vim='nvim'
-alias nv='nvim'
+if command -v nvim &>/dev/null; then
+  export EDITOR=nvim
+  export VISUAL=nvim
+  alias vim='nvim'
+  alias vi='nvim'
+  alias nv='nvim'
+  alias svi='sudo nvim'
+  alias vis='nvim "+set si"'
+else
+  export EDITOR=vim
+  export VISUAL=vim
+fi
+alias spico='sudo pico'
+alias snano='sudo nano'
 
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
@@ -129,32 +135,31 @@ alias hlp='less ~/.bashrc_help'
 # alias to show the date
 alias da='date "+%Y-%m-%d %A %T %Z"'
 
-# Alias's to modified commands
+# Aliases to modified commands
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='trash -v'
+if command -v trash &>/dev/null; then
+  alias rm='trash -v'
+else
+  alias rm='rm -i' # fallback to interactive remove
+fi
 alias mkdir='mkdir -p'
 alias ps='ps auxf'
-alias ping='ping -c 10'
 alias less='less -R'
 alias cls='clear'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
-# alias vi='nvim'
+alias vi='nvim'
 alias svi='sudo vi'
 alias vis='nvim "+set si"'
-alias zz='zellij'
+alias py='python3'
 
-# Change directory aliases
-alias home='cd ~'
+# Change directory alias
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-
-# call python3 with py
-alias py='python3'
 
 # cd into the old directory
 alias bd='cd "$OLDPWD"'
@@ -164,7 +169,7 @@ alias rmd='/bin/rm  --recursive --force --verbose '
 
 # Alias's for multiple directory listing commands
 alias la='ls -Alh'                                # show hidden files
-alias ls='eza -aF --icons=always'                 # add colors, icons, and file type extensions
+alias ls='eza -AF --color=always --icons=always'  # add colors, icons, and file type extensions
 alias lx='ls -lXBh'                               # sort by extension
 alias lk='ls -lSrh'                               # sort by size
 alias lc='ls -ltcrh'                              # sort by change time
@@ -366,7 +371,7 @@ up() {
   if [ -z "$d" ]; then
     d=..
   fi
-  cd $d
+  cd "$d"
 }
 
 # Automatically do an ls after each cd, z, or zoxide
@@ -541,74 +546,23 @@ function whatsmyip() {
   curl -s ifconfig.me
 }
 
-# View Apache logs
-apachelog() {
-  if [ -f /etc/httpd/conf/httpd.conf ]; then
-    cd /var/log/httpd && ls -xAh && multitail --no-repeat -c -s 2 /var/log/httpd/*_log
-  else
-    cd /var/log/apache2 && ls -xAh && multitail --no-repeat -c -s 2 /var/log/apache2/*.log
-  fi
-}
-
-# Edit the Apache configuration
-apacheconfig() {
-  if [ -f /etc/httpd/conf/httpd.conf ]; then
-    sedit /etc/httpd/conf/httpd.conf
-  elif [ -f /etc/apache2/apache2.conf ]; then
-    sedit /etc/apache2/apache2.conf
-  else
-    echo "Error: Apache config file could not be found."
-    echo "Searching for possible locations:"
-    sudo updatedb && locate httpd.conf && locate apache2.conf
-  fi
-}
-
-# Edit the PHP configuration file
-phpconfig() {
-  if [ -f /etc/php.ini ]; then
-    sedit /etc/php.ini
-  elif [ -f /etc/php/php.ini ]; then
-    sedit /etc/php/php.ini
-  elif [ -f /etc/php5/php.ini ]; then
-    sedit /etc/php5/php.ini
-  elif [ -f /usr/bin/php5/bin/php.ini ]; then
-    sedit /usr/bin/php5/bin/php.ini
-  elif [ -f /etc/php5/apache2/php.ini ]; then
-    sedit /etc/php5/apache2/php.ini
-  else
-    echo "Error: php.ini file could not be found."
-    echo "Searching for possible locations:"
-    sudo updatedb && locate php.ini
-  fi
-}
-
-# Edit the MySQL configuration file
-mysqlconfig() {
-  if [ -f /etc/my.cnf ]; then
-    sedit /etc/my.cnf
-  elif [ -f /etc/mysql/my.cnf ]; then
-    sedit /etc/mysql/my.cnf
-  elif [ -f /usr/local/etc/my.cnf ]; then
-    sedit /usr/local/etc/my.cnf
-  elif [ -f /usr/bin/mysql/my.cnf ]; then
-    sedit /usr/bin/mysql/my.cnf
-  elif [ -f ~/my.cnf ]; then
-    sedit ~/my.cnf
-  elif [ -f ~/.my.cnf ]; then
-    sedit ~/.my.cnf
-  else
-    echo "Error: my.cnf file could not be found."
-    echo "Searching for possible locations:"
-    sudo updatedb && locate my.cnf
-  fi
-}
-
 # Trim leading and trailing spaces (for scripts)
 trim() {
   local var=$*
   var="${var#"${var%%[![:space:]]*}"}" # remove leading whitespace characters
   var="${var%"${var##*[![:space:]]}"}" # remove trailing whitespace characters
   echo -n "$var"
+}
+
+gcom() {
+  git add .
+  git commit -m "$1"
+}
+
+lazyg() {
+  git add .
+  git commit -m "$1"
+  git push
 }
 
 #######################################################
@@ -628,12 +582,11 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 # eval "$(starship init bash)"
 eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/EDM115-newline.omp.json)"
-eval "$(zoxide init bash)"
-source /home/agrippa/github/alacritty/extra/completions/alacritty.bash
+# source /home/agrippa/github/alacritty/extra/completions/alacritty.bash
 
 export LIBVIRT_DEFAULT_URI='qemu:///system'
 export PATH="$PATH:/opt/nvim/"
 export HELIX_RUNTIME=~/src/helix/runtime
-export PATH="$HOME/.emacs.d/bin:$PATH"
 eval "$(uv generate-shell-completion bash)"
 eval "$(uvx --generate-shell-completion bash)"
+eval "$(zoxide init --cmd cd bash)"
