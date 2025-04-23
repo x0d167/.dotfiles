@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-iatest=$(expr index "$-" i)
+# Check if shell is interactive (i in $-)
+_shell_flags="${-%%i*}"
+iatest=$((${#_shell_flags} + 1))
 
 #######################################################
 # SOURCED ALIAS'S AND SCRIPTS BY zachbrowne.me
@@ -48,9 +50,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-# Seeing as other scripts will use it might as well export it
-export LINUXTOOLBOXDIR="$HOME/linuxtoolbox"
-
 # Allow ctrl-S for history navigation (with ctrl-R)
 [[ $- == *i* ]] && stty -ixon
 
@@ -62,14 +61,20 @@ if [[ $iatest -gt 0 ]]; then bind "set completion-ignore-case on"; fi
 if [[ $iatest -gt 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
 # Set the default editor
-export EDITOR="$VISUAL"
-export VISUAL=''/usr/local/bin/nvim
-alias pico='edit'
-alias spico='sedit'
-alias edit='nano'
-alias sedit='sudo nano'
-alias vim='nvim'
-alias nv='nvim'
+if command -v nvim &>/dev/null; then
+  export EDITOR=nvim
+  export VISUAL=nvim
+  alias vim='nvim'
+  alias vi='nvim'
+  alias nv='nvim'
+  alias svi='sudo nvim'
+  alias vis='nvim "+set si"'
+else
+  export EDITOR=vim
+  export VISUAL=vim
+fi
+alias spico='sudo pico'
+alias snano='sudo nano'
 
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
@@ -78,13 +83,10 @@ export LS_COLORS='no=00:fi=00:di=00;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 
 # Check if ripgrep is installed
 if command -v rg &>/dev/null; then
-  # Alias grep to rg if ripgrep is installed
   alias grep='rg'
 else
-  # Alias grep to /usr/bin/grep with GREP_OPTIONS if ripgrep is not installed
-  alias grep="/usr/bin/grep $GREP_OPTIONS"
+  alias grep='grep --color=auto' # no $GREP_OPTIONS
 fi
-unset GREP_OPTIONS
 
 # Color for manpages in less makes manpages a little easier to read
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -129,32 +131,31 @@ alias hlp='less ~/.bashrc_help'
 # alias to show the date
 alias da='date "+%Y-%m-%d %A %T %Z"'
 
-# Alias's to modified commands
+# Aliases to modified commands
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='trash -v'
+if command -v trash &>/dev/null; then
+  alias rm='trash -v'
+else
+  alias rm='rm -i' # fallback to interactive remove
+fi
 alias mkdir='mkdir -p'
 alias ps='ps auxf'
-alias ping='ping -c 10'
 alias less='less -R'
 alias cls='clear'
 alias multitail='multitail --no-repeat -c'
 alias freshclam='sudo freshclam'
-# alias vi='nvim'
+alias vi='nvim'
 alias svi='sudo vi'
 alias vis='nvim "+set si"'
-alias zz='zellij'
+alias py='python3'
 
-# Change directory aliases
-alias home='cd ~'
+# Change directory alias
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-
-# call python3 with py
-alias py='python3'
 
 # cd into the old directory
 alias bd='cd "$OLDPWD"'
@@ -164,7 +165,7 @@ alias rmd='/bin/rm  --recursive --force --verbose '
 
 # Alias's for multiple directory listing commands
 alias la='ls -Alh'                                # show hidden files
-alias ls='eza -aF --icons=always'                 # add colors, icons, and file type extensions
+alias ls='eza -AF --color=always --icons=always'  # add colors, icons, and file type extensions
 alias lx='ls -lXBh'                               # sort by extension
 alias lk='ls -lSrh'                               # sort by size
 alias lc='ls -ltcrh'                              # sort by change time
@@ -184,6 +185,9 @@ alias et='eza -T'                                 # Tree
 alias yf='yazi'                                   # Yazi tui
 alias rf='ranger'                                 # Ranger tui in case I switch from Yazi in another config
 
+#######################################################
+# GIT SHORTCUTS
+#######################################################
 # Basic git commands
 alias gs='git status'
 alias ga='git add'
@@ -202,11 +206,11 @@ alias gb='git branch'
 
 # alias chmod commands
 alias mx='chmod a+x'
-alias 000='chmod -R 000'
-alias 644='chmod -R 644'
-alias 666='chmod -R 666'
-alias 755='chmod -R 755'
-alias 777='chmod -R 777'
+# alias 000='chmod -R 000'
+# alias 644='chmod -R 644'
+# alias 666='chmod -R 666'
+# alias 755='chmod -R 755'
+# alias 777='chmod -R 777'
 
 # Search command line history
 alias h="history | grep "
@@ -218,11 +222,11 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 # Search files in the current folder
 alias f="find . | grep "
 
-# Count all files (recursively) in the current folder
-alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
-
 # To see if a command is aliased, a file, or a built-in command
 alias checkcommand="type -t"
+
+# A .bashrc linter
+alias checkrc='shellcheck ~/.bashrc'
 
 # Show open ports
 alias openports='netstat -nape --inet'
@@ -273,6 +277,9 @@ alias docker-clean=' \
   docker volume prune -f '
 
 #######################################################
+# BashRC support installer
+[ -f "$HOME/.bash_support.sh" ] && source "$HOME/.bash_support.sh"
+
 # SPECIAL FUNCTIONS
 #######################################################
 # Extracts any archive(s) (if unp isn't installed)
@@ -280,22 +287,35 @@ extract() {
   for archive in "$@"; do
     if [ -f "$archive" ]; then
       case $archive in
-      *.tar.bz2) tar xvjf $archive ;;
-      *.tar.gz) tar xvzf $archive ;;
-      *.bz2) bunzip2 $archive ;;
-      *.rar) rar x $archive ;;
-      *.gz) gunzip $archive ;;
-      *.tar) tar xvf $archive ;;
-      *.tbz2) tar xvjf $archive ;;
-      *.tgz) tar xvzf $archive ;;
-      *.zip) unzip $archive ;;
-      *.Z) uncompress $archive ;;
-      *.7z) 7z x $archive ;;
+      *.tar.bz2) tar xvjf "$archive" ;;
+      *.tar.gz) tar xvzf "$archive" ;;
+      *.bz2) bunzip2 "$archive" ;;
+      *.rar) rar x "$archive" ;;
+      *.gz) gunzip "$archive" ;;
+      *.tar) tar xvf "$archive" ;;
+      *.tbz2) tar xvjf "$archive" ;;
+      *.tgz) tar xvzf "$archive" ;;
+      *.zip) unzip "$archive" ;;
+      *.Z) uncompress "$archive" ;;
+      *.7z) 7z x "$archive" ;;
       *) echo "don't know how to extract '$archive'..." ;;
       esac
     else
       echo "'$archive' is not a valid file!"
     fi
+  done
+}
+
+# Enable tab-completion for archive files only
+shopt -s extglob
+complete -f -X '!*.@(tar|gz|bz2|zip|rar|7z|tar.gz|tar.bz2|tbz2|tgz)' extract
+
+# Count all files (recursively) in the current folder
+countfiles() {
+  for t in files links directories; do
+    local type_flag="${t:0:1}" # f for file, l for link, d for directory
+    count=$(find . -type "$type_flag" 2>/dev/null | wc -l)
+    echo "$count $t"
   done
 }
 
@@ -366,7 +386,7 @@ up() {
   if [ -z "$d" ]; then
     d=..
   fi
-  cd $d
+  cd "$d"
 }
 
 # Automatically do an ls after each cd, z, or zoxide
@@ -490,39 +510,6 @@ ver() {
 }
 
 # Automatically install the needed support files for this .bashrc file
-install_bashrc_support() {
-  local dtype
-  dtype=$(distribution)
-
-  case $dtype in
-  "redhat")
-    sudo yum install multitail tree zoxide trash-cli fzf bash-completion fastfetch
-    ;;
-  "suse")
-    sudo zypper install multitail tree zoxide trash-cli fzf bash-completion fastfetch
-    ;;
-  "debian")
-    sudo apt install multitail tree zoxide trash-cli fzf bash-completion
-    # Fetch the latest fastfetch release URL for linux-amd64 deb file
-    FASTFETCH_URL=$(curl -s https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest | grep "browser_download_url.*linux-amd64.deb" | cut -d '"' -f 4)
-
-    # Download the latest fastfetch deb file
-    curl -sL $FASTFETCH_URL -o /tmp/fastfetch_latest_amd64.deb
-
-    # Install the downloaded deb file using apt-get
-    sudo apt install /tmp/fastfetch_latest_amd64.deb
-    ;;
-  "arch")
-    sudo paru multitail tree zoxide trash-cli fzf bash-completion fastfetch
-    ;;
-  "slackware")
-    echo "No install support for Slackware"
-    ;;
-  *)
-    echo "Unknown distribution"
-    ;;
-  esac
-}
 
 # IP address lookup
 alias whatismyip="whatsmyip"
@@ -541,74 +528,73 @@ function whatsmyip() {
   curl -s ifconfig.me
 }
 
-# View Apache logs
-apachelog() {
-  if [ -f /etc/httpd/conf/httpd.conf ]; then
-    cd /var/log/httpd && ls -xAh && multitail --no-repeat -c -s 2 /var/log/httpd/*_log
-  else
-    cd /var/log/apache2 && ls -xAh && multitail --no-repeat -c -s 2 /var/log/apache2/*.log
-  fi
-}
-
-# Edit the Apache configuration
-apacheconfig() {
-  if [ -f /etc/httpd/conf/httpd.conf ]; then
-    sedit /etc/httpd/conf/httpd.conf
-  elif [ -f /etc/apache2/apache2.conf ]; then
-    sedit /etc/apache2/apache2.conf
-  else
-    echo "Error: Apache config file could not be found."
-    echo "Searching for possible locations:"
-    sudo updatedb && locate httpd.conf && locate apache2.conf
-  fi
-}
-
-# Edit the PHP configuration file
-phpconfig() {
-  if [ -f /etc/php.ini ]; then
-    sedit /etc/php.ini
-  elif [ -f /etc/php/php.ini ]; then
-    sedit /etc/php/php.ini
-  elif [ -f /etc/php5/php.ini ]; then
-    sedit /etc/php5/php.ini
-  elif [ -f /usr/bin/php5/bin/php.ini ]; then
-    sedit /usr/bin/php5/bin/php.ini
-  elif [ -f /etc/php5/apache2/php.ini ]; then
-    sedit /etc/php5/apache2/php.ini
-  else
-    echo "Error: php.ini file could not be found."
-    echo "Searching for possible locations:"
-    sudo updatedb && locate php.ini
-  fi
-}
-
-# Edit the MySQL configuration file
-mysqlconfig() {
-  if [ -f /etc/my.cnf ]; then
-    sedit /etc/my.cnf
-  elif [ -f /etc/mysql/my.cnf ]; then
-    sedit /etc/mysql/my.cnf
-  elif [ -f /usr/local/etc/my.cnf ]; then
-    sedit /usr/local/etc/my.cnf
-  elif [ -f /usr/bin/mysql/my.cnf ]; then
-    sedit /usr/bin/mysql/my.cnf
-  elif [ -f ~/my.cnf ]; then
-    sedit ~/my.cnf
-  elif [ -f ~/.my.cnf ]; then
-    sedit ~/.my.cnf
-  else
-    echo "Error: my.cnf file could not be found."
-    echo "Searching for possible locations:"
-    sudo updatedb && locate my.cnf
-  fi
-}
-
 # Trim leading and trailing spaces (for scripts)
 trim() {
   local var=$*
   var="${var#"${var%%[![:space:]]*}"}" # remove leading whitespace characters
   var="${var%"${var##*[![:space:]]}"}" # remove trailing whitespace characters
   echo -n "$var"
+}
+
+gundo() {
+  git reset --soft HEAD~1 && echo "Commit undone (soft)."
+}
+
+gcom() {
+  if [ $# -eq 0 ]; then
+    echo "Usage:"
+    echo "  gcom \"commit message\"                # adds all files"
+    echo "  gcom file1 file2 ... \"commit msg\"    # adds specific files"
+    return 1
+  fi
+
+  if [ $# -eq 1 ]; then
+    git add .
+    git commit -m "$1"
+  else
+    local msg="${*: -1}"
+    local files=("${@:1:$#-1}")
+    git add "${files[@]}"
+    git commit -m "$msg"
+  fi
+}
+
+lazyg() {
+  local timestamp
+  timestamp=$(date '+%Y-%m-%d %H:%M')
+  local messages=(
+    "ugh, I'm probably just tweaking some annoying thing I missed before pushing the last time."
+    "why is this always the last thing I see after pushing 😭"
+    "tiny fix that shouldn't exist, but here we are."
+    "did I push too early? yes. am I fixing it now? also yes."
+    "fixing that one thing I swore was fine 10 minutes ago."
+    "the commit of shame. [$timestamp]"
+    "past me was too confident. again."
+    "you didn't see this commit, okay?"
+    "nothing to see here... just a tiny mistake with big dreams."
+    "guess what? I forgot something. [$timestamp]"
+  )
+
+  # Pick a random message from the list
+  local random_index=$((RANDOM % ${#messages[@]}))
+  local random_msg="${messages[$random_index]} [$timestamp]"
+
+  if [ $# -eq 0 ]; then
+    git add .
+    git commit -m "$random_msg"
+  elif [ $# -eq 1 ]; then
+    git add .
+    git commit -m "$1"
+  else
+    local msg="${*: -1}"
+    local files=("${@:1:$#-1}")
+    git add "${files[@]}"
+    git commit -m "$msg"
+  fi
+
+  local current_branch
+  current_branch=$(git rev-parse --abbrev-ref HEAD)
+  git push -u origin "$current_branch"
 }
 
 #######################################################
@@ -628,12 +614,11 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 # eval "$(starship init bash)"
 eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/EDM115-newline.omp.json)"
-eval "$(zoxide init bash)"
-source /home/agrippa/github/alacritty/extra/completions/alacritty.bash
+# source /home/agrippa/github/alacritty/extra/completions/alacritty.bash
 
 export LIBVIRT_DEFAULT_URI='qemu:///system'
 export PATH="$PATH:/opt/nvim/"
 export HELIX_RUNTIME=~/src/helix/runtime
-export PATH="$HOME/.emacs.d/bin:$PATH"
 eval "$(uv generate-shell-completion bash)"
 eval "$(uvx --generate-shell-completion bash)"
+eval "$(zoxide init --cmd cd bash)"
