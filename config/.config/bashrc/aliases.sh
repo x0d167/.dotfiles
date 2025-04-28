@@ -34,7 +34,7 @@ alias bd='cd "$OLDPWD"'
 # Listing and viewing
 alias rmd='/bin/rm  --recursive --force --verbose '
 alias la='ls -Alh'
-alias ls='eza -AF --color=always --icons=always'
+alias ls='eza -F --color=always --icons=always'
 alias ll='eza -al --icons=always'
 alias lx='ls -lXBh'
 alias lk='ls -lSrh'

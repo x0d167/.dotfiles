@@ -37,6 +37,16 @@ countfiles() {
   done
 }
 
+cat() {
+  if command -v batcat &>/dev/null; then
+    batcat "$@"
+  elif command -v bat &>/dev/null; then
+    bat "$@"
+  else
+    command cat "$@"
+  fi
+}
+
 ftext() {
   grep -iIHrn --color=always "$1" . | less -r
 }

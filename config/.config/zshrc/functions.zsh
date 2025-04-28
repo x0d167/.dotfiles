@@ -44,6 +44,17 @@ ftext() {
   grep -iIHrn --color=always "$1" . | less -r
 }
 
+cat() {
+  if command -v batcat &> /dev/null; then
+    batcat "$@"
+  elif command -v bat &> /dev/null; then
+    bat "$@"
+  else
+    command cat "$@"
+  fi
+}
+
+
 cpp() {
   set -e
   strace -q -ewrite cp -- "$1" "$2" 2>&1 | awk '

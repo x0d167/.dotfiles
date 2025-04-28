@@ -1,0 +1,148 @@
+schema: "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+
+transient_prompt:
+  template: "  ❯❯ {{ .AbsolutePWD }} : "
+  foreground: "#f8f8f2"
+  background: "transparent"
+  newline: true
+
+blocks:
+  - type: prompt
+    alignment: left
+    segments:
+      - type: text
+        style: plain
+        template: "\n\u256d\u2500"
+        foreground: "#f8f8f2"
+        properties:
+          cache_duration: none
+
+      - type: session
+        style: diamond
+        leading_diamond: "\ue0b6"
+        template: "{{ .UserName }}"
+        foreground: "#f8f8f2"
+        background: "#282a36"
+        properties:
+          cache_duration: none
+
+      - type: root
+        style: powerline
+        template: "\udb85\udc0b"
+        powerline_symbol: "\ue0b0"
+        foreground: "#ff5555"
+        background: "#282a36"
+        properties:
+          cache_duration: none
+
+      - type: os
+        style: powerline
+        template: "{{ .Icon }}  "
+        powerline_symbol: "\ue0b0"
+        foreground: "#f8f8f2"
+        background: "#282a36"
+        properties:
+          cache_duration: none
+
+      - type: path
+        style: diamond
+        trailing_diamond: "\ue0b4"
+        template: " \udb80\ude56 {{ path .Path .Location }}"
+        foreground: "#282a36"
+        background: "#cccccc"
+        properties:
+          cache_duration: none
+          style: full
+
+  - type: prompt
+    alignment: right
+    segments:
+      - type: git
+        style: diamond
+        leading_diamond: "\ue0b6"
+        trailing_diamond: "\ue0b4"
+        template: "\ue725 ({{ url .UpstreamIcon .UpstreamURL }} {{ url .HEAD .UpstreamURL }}){{ if gt .Ahead 0 }}<#50fa7b> +{{ .Ahead }}</>{{ end }}{{ if gt .Behind 0 }}<#ff5555> -{{ .Behind }}</>{{ end }}{{ if .Working.Changed }}<#f8f8f2> \uf044 {{ .Working.String }}</>{{ end }}{{ if .Staging.Changed }}<#f8f8f2> \uf046 {{ .Staging.String }}</>{{ end }}"
+        foreground: "#282a36"
+        background: "#ffb86c"
+        properties:
+          branch_icon: ""
+          cache_duration: none
+          display_changing_color: true
+          fetch_status: true
+          fetch_upstream_icon: true
+          full_branch_path: true
+
+      - type: node
+        style: diamond
+        leading_diamond: "\ue0b6"
+        trailing_diamond: "\ue0b4"
+        template: "\ue718 {{ .Full }}"
+        foreground: "#282a36"
+        background: "#50fa7b"
+
+      - type: npm
+        style: diamond
+        leading_diamond: "\ue0b6"
+        trailing_diamond: "\ue0b4"
+        template: "\ue71e {{ .Full }}"
+        foreground: "#282a36"
+        background: "#ff5555"
+        properties:
+          display_mode: files
+          extensions:
+            - "package-lock.json"
+
+      - type: pnpm
+        style: diamond
+        leading_diamond: "\ue0b6"
+        trailing_diamond: "\ue0b4"
+        template: "\udb80\udec1 {{ .Full }}"
+        foreground: "#282a36"
+        background: "#ffb86c"
+        properties:
+          display_mode: files
+          extensions:
+            - "pnpm-lock.yaml"
+
+      - type: python
+        style: diamond
+        leading_diamond: "\ue0b6"
+        trailing_diamond: "\ue0b4"
+        template: "\ue73c {{ .Full }}"
+        foreground: "#282a36"
+        background: "#50fa7b"
+        properties:
+          display_mode: files
+
+      - type: java
+        style: diamond
+        leading_diamond: "\ue0b6"
+        trailing_diamond: "\ue0b4"
+        template: "\ue738 {{ .Full }}"
+        foreground: "#282a36"
+        background: "#ff79c6"
+
+      - type: php
+        style: diamond
+        leading_diamond: "\ue0b6"
+        trailing_diamond: "\ue0b4"
+        template: "\ue73d {{ .Full }}"
+        foreground: "#f8f8f2"
+        background: "#6272a4"
+
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: text
+        style: diamond
+        template: "\u2570\u2500 ❯❯"
+        foreground: "#f8f8f2"
+        properties:
+          always_enabled: true
+          cache_duration: none
+
+version: 3
+patch_pwsh_bleed: true
+final_space: true
+

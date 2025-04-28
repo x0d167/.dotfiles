@@ -96,7 +96,6 @@ return {
             },
           },
         },
-        marksman = {},
         clangd = {},
         bashls = {},
         sqlls = {},

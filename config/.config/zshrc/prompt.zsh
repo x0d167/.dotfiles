@@ -4,6 +4,7 @@
 # Ctrl+F inserts 'zi' and presses enter
 [[ -o interactive ]] && bindkey -s '^F' 'zi\n'
 
+setopt prompt_subst
 # Load your Oh My Posh prompt (or use Starship if you prefer)
 # eval "$(starship init zsh)"
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/EDM115-newline.omp.json)"
