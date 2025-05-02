@@ -11,4 +11,3 @@ eval "$(oh-my-posh init bash --config ~/.config/ohmyposh/EDM115-newline.omp.json
 
 eval "$(uv generate-shell-completion bash)"
 eval "$(uvx --generate-shell-completion bash)"
-eval "$(zoxide init --cmd cd bash)"
