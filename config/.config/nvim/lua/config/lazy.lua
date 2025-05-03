@@ -75,15 +75,15 @@ vim.cmd([[
   hi SignColumn guibg=NONE ctermbg=NONE ctermfg=NONE
 
   " Pop-up menu (autocomplete, etc.)
-  hi Pmenu guibg=#1e1e2eAA guifg=#ffffff
-  hi PmenuSel guibg=#44475a guifg=#ffffff
-  hi PmenuSbar guibg=#1e1e2eAA
-  hi PmenuThumb guibg=#888888
+  hi Pmenu guibg=NONE guifg=NONE
+  hi PmenuSel guibg=NONE guifg=NONE
+  hi PmenuSbar guibg=NONE
+  hi PmenuThumb guibg=NONE
 
   " Floating windows
-  hi NormalFloat guibg=#1e1e2eAA guifg=#ffffff
-  hi FloatBorder guibg=#1e1e2eAA guifg=#888888
+  hi NormalFloat guibg=NONE guifg=NONE
+  hi FloatBorder guibg=NONE guifg=NONE
 
   " Tabline fallback (if used elsewhere)
-  hi TabLine guibg=#1e1e2eAA guifg=#cccccc
+  hi TabLine guibg=NONE guifg=NONE
 ]])
