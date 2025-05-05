@@ -1,7 +1,0 @@
-[Unit]
-Description=Update Kitty Terminal
-
-[Service]
-Type=oneshot
-ExecStart=%h/Scripts/kitty-update.sh
-
