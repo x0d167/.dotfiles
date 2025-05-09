@@ -2,6 +2,7 @@ return {
   "mrcjkb/rustaceanvim",
   version = "^6",
   lazy = false,
+  dependencies = { "williamboman/mason.nvim" },
   ft = { "rust" },
   opts = {
     server = {
@@ -24,10 +25,12 @@ return {
             },
           },
           -- Add clippy lints for Rust if using rust-analyzer
-          checkOnSave = diagnostics == "rust-analyzer",
+          checkOnSave = {
+            command = "clippy",
+          },
           -- Enable diagnostics if using rust-analyzer
           diagnostics = {
-            enable = diagnostics == "rust-analyzer",
+            enable = true,
           },
           procMacro = {
             enable = true,
@@ -56,13 +59,20 @@ return {
   },
   config = function(_, opts)
     if LazyVim.has("mason.nvim") then
-      local package_path = require("mason-registry").get_package("codelldb"):get_install_path()
+      local ok, codelldb_pkg = pcall(require("mason-registry").get_package, "codelldb")
+      if not ok then
+        vim.notify("codelldb is not installed", vim.log.levels.WARN)
+        return
+      end
+
+      local package_path = codelldb_pkg:get_install_path()
       local codelldb = package_path .. "/extension/adapter/codelldb"
       local library_path = package_path .. "/extension/lldb/lib/liblldb.dylib"
       local uname = io.popen("uname"):read("*l")
       if uname == "Linux" then
         library_path = package_path .. "/extension/lldb/lib/liblldb.so"
       end
+
       opts.dap = {
         adapter = require("rustaceanvim.config").get_codelldb_adapter(codelldb, library_path),
       }
