@@ -3,7 +3,7 @@ return {
   event = "LazyFile",
   dependencies = {
     "mason.nvim",
-    { "williamboman/mason-lspconfig.nvim", config = function() end },
+    { "mason-org/mason-lspconfig.nvim", config = function() end },
     { "j-hui/fidget.nvim", opts = {} },
     "saghen/blink.cmp",
   },

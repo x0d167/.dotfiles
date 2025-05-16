@@ -2,7 +2,7 @@ return {
   "mrcjkb/rustaceanvim",
   version = "^6",
   enable = false,
-  lazy = false,
+  lazy = true,
   dependencies = { "williamboman/mason.nvim" },
   ft = { "rust" },
   opts = {
