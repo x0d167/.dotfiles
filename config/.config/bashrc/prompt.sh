@@ -2,7 +2,7 @@
 
 # Ctrl+F inserts 'zi' in interactive shells
 if [[ $- == *i* ]]; then
-  bind '"\C-f":"zi\n"'
+    bind '"\C-f":"zi\n"'
 fi
 
 # Prompt tool setup (Starship or Oh My Posh)
@@ -14,4 +14,6 @@ eval "$(uvx --generate-shell-completion bash)"
 
 # z is hard to type but c'est la vie
 eval "$(zoxide init bash)"
+eval "$(atuin init bash)"
+
 export _ZO_DOCTOR=0

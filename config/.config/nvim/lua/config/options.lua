@@ -111,14 +111,14 @@ opt.splitright = true -- Put new windows right of current
 opt.statuscolumn = [[%!v:lua.require'snacks.statuscolumn'.get()]]
 opt.tabstop = 4 -- Number of spaces tabs count for
 opt.termguicolors = true -- True color support
-opt.textwidth = 79 -- Setting the text with for wrapping and formatting text
+opt.textwidth = 99 -- Setting the text with for wrapping and formatting text
 opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
 opt.undofile = true
 opt.undolevels = 10000
 opt.updatetime = 200 -- Save swap file and trigger CursorHold
 opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 opt.whichwrap = "bs<>[]hl" -- Which "horizontal" keys are allowed to travel to prev/next line (default: 'b,s')
-opt.wildmode = "longest:full,full" -- Command-line completion mode
+opt.wildmode = { "longest", "list" } -- Bash-style command-line completion
 opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
 
@@ -134,3 +134,8 @@ end
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
+
+-- Syntax and filetype
+vim.cmd("syntax on")
+vim.cmd("filetype plugin indent on")
+vim.cmd("filetype plugin on")

@@ -4,9 +4,9 @@
 
 # Exit early if not interactive
 if [[ $- == *i* ]]; then
-  export iatest=1
+    export iatest=1
 else
-  export iatest=0
+    export iatest=0
 fi
 
 # Run fastfetch if available
@@ -17,11 +17,11 @@ command -v fastfetch &>/dev/null && fastfetch
 
 # Enable programmable completion (Bash only)
 if [ -f /usr/share/bash-completion/bash_completion ]; then
-  source /usr/share/bash-completion/bash_completion
+    source /usr/share/bash-completion/bash_completion
 elif [ -f /etc/bash_completion ]; then
-  source /etc/bash_completion
+    source /etc/bash_completion
 fi
 
-# z is hard to type but c'est la vie
-# eval "$(zoxide init bash)"
-# export _ZO_DOCTOR=0
+. "$HOME/.atuin/bin/env"
+
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh

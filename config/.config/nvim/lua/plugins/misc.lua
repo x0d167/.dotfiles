@@ -8,4 +8,24 @@ return {
       require("colorizer").setup()
     end,
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    event = "VeryLazy",
+    opts = {
+      indent = {
+        char = "│",
+        highlight = {
+          "RainbowRed",
+          "RainbowYellow",
+          "RainbowBlue",
+          "RainbowGreen",
+          "RainbowCyan",
+          "RainbowViolet",
+          "RainbowOrange",
+        },
+      },
+      scope = { enabled = false }, -- optional: disables active indent scope highlight
+    },
+  },
 }
