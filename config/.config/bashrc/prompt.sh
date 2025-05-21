@@ -14,6 +14,5 @@ eval "$(uvx --generate-shell-completion bash)"
 
 # z is hard to type but c'est la vie
 eval "$(zoxide init bash)"
-eval "$(atuin init bash)"
 
 export _ZO_DOCTOR=0
